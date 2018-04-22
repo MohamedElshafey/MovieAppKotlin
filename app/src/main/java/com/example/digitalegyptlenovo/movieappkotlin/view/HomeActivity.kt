@@ -15,11 +15,13 @@ class HomeActivity : AppCompatActivity() {
     @Inject
     lateinit var retrofit: Retrofit
 
-    var homeVieModel: HomeViewModel? = null
+    private var homeVieModel: HomeViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         (application as App).networkComponent?.inject(this)
+
         val binding: ActivityHomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_home);
 
         homeVieModel = HomeViewModel(this, binding, retrofit)

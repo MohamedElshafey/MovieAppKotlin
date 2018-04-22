@@ -16,7 +16,9 @@ import com.example.digitalegyptlenovo.movieappkotlin.sqlite.helper.GenreSqlHelpe
 /**
  * Created by Mohamed Elshafey on 4/18/2018.
  */
-class AllMovieAdapter(val context: Context, val movies: ArrayList<Movie>) : BaseAdapter() {
+class AllMovieAdapter(val context: Context, var movies: ArrayList<Movie>) : BaseAdapter() {
+
+
 
     @SuppressLint("ViewHolder")
     override fun getView(i: Int, view: View?, viewGroup: ViewGroup?): View {
@@ -60,4 +62,6 @@ class AllMovieAdapter(val context: Context, val movies: ArrayList<Movie>) : Base
     override fun getCount(): Int {
         return movies.size
     }
+
+
 }
