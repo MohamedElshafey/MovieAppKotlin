@@ -16,19 +16,26 @@ import com.example.digitalegyptlenovo.movieappkotlin.sqlite.helper.GenreSqlHelpe
 /**
  * Created by Mohamed Elshafey on 4/18/2018.
  */
-class AllMovieAdapter(val context: Context, var movies: ArrayList<Movie>) : BaseAdapter() {
+class AllMovieAdapter(private val context: Context) : BaseAdapter() {
 
+    private var movies: ArrayList<Movie> = ArrayList()
 
+    fun updateData(movies: ArrayList<Movie>) {
+        this.movies = movies;
+        super.notifyDataSetChanged()
+    }
 
     @SuppressLint("ViewHolder")
     override fun getView(i: Int, view: View?, viewGroup: ViewGroup?): View {
         val inflater: LayoutInflater = LayoutInflater.from(context)
         val binding: MovieItemBinding = DataBindingUtil.inflate(inflater, R.layout.movie_item, viewGroup, false)
 
-        val movie: Movie = movies.get(i)
+        val movie: Movie = movies[i]
 
         val mainImageUrl = "https://image.tmdb.org/t/p/w500"
+
         val posterPath = movie.poster_path
+
         val fullImageUrl = mainImageUrl.plus(posterPath)
 
         Glide.with(context).load(fullImageUrl).into(binding.image)
@@ -58,6 +65,8 @@ class AllMovieAdapter(val context: Context, var movies: ArrayList<Movie>) : Base
     override fun getItemId(i: Int): Long {
         return 0
     }
+
+
 
     override fun getCount(): Int {
         return movies.size

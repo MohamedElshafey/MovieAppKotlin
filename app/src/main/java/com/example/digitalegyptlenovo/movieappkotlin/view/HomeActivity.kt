@@ -24,7 +24,9 @@ class HomeActivity : AppCompatActivity() {
 
         val binding: ActivityHomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_home);
 
-        homeVieModel = HomeViewModel(this, binding, retrofit)
+        homeVieModel = HomeViewModel(this, retrofit)
+
+        binding.homeViewModel = homeVieModel
     }
 
     override fun onDestroy() {

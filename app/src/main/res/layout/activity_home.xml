@@ -4,12 +4,14 @@
 
     <data>
 
+        <variable
+            name="homeViewModel"
+            type="com.example.digitalegyptlenovo.movieappkotlin.viewmodel.HomeViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <include
             android:id="@+id/toolbar"
@@ -18,22 +20,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_centerInParent="true"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:visibility="@{homeViewModel.progressEnable}"
             app:layout_constraintBottom_toBottomOf="@+id/gridview"
             app:layout_constraintEnd_toEndOf="@+id/gridview"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-        <com.example.digitalegyptlenovo.movieappkotlin.customviews.EndlessGridView
+        <GridView
             android:id="@+id/gridview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,13 +47,16 @@
             android:numColumns="@integer/grid_columns"
             android:stretchMode="columnWidth"
             android:verticalSpacing="6dp"
+            app:adapter="@{homeViewModel.movieAdapter}"
+            app:data="@{homeViewModel.movies}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintVertical_bias="0.0"
+            app:loadMore="@{homeViewModel.loadMoreInterface}">
 
-        </com.example.digitalegyptlenovo.movieappkotlin.customviews.EndlessGridView>
+        </GridView>
 
     </android.support.constraint.ConstraintLayout>
 
