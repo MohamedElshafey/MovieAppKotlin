@@ -9,7 +9,7 @@ import com.example.digitalegyptlenovo.movieappkotlin.adapter.AllMovieAdapter
 import com.example.digitalegyptlenovo.movieappkotlin.bindingadapter.LoadMore
 import com.example.digitalegyptlenovo.movieappkotlin.model.Genres
 import com.example.digitalegyptlenovo.movieappkotlin.model.Movie
-import com.example.digitalegyptlenovo.movieappkotlin.sqlite.helper.GenreSqlHelper
+import com.example.digitalegyptlenovo.movieappkotlin.database.GenreSqlHelper
 import com.example.digitalegyptlenovo.movieappkotlin.webservice.MovieDbAPiConst
 import com.example.digitalegyptlenovo.movieappkotlin.webservice.RetrofitService
 import io.reactivex.Observable

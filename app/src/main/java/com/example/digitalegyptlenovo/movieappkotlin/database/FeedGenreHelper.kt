@@ -1,12 +1,12 @@
-package com.example.digitalegyptlenovo.movieappkotlin.sqlite.helper
+package com.example.digitalegyptlenovo.movieappkotlin.database
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
 import android.provider.BaseColumns._ID
-import com.example.digitalegyptlenovo.movieappkotlin.sqlite.helper.DatabaseConstants.Companion.DATABASE_NAME
-import com.example.digitalegyptlenovo.movieappkotlin.sqlite.helper.DatabaseConstants.Companion.DATABASE_VERSION
+import com.example.digitalegyptlenovo.movieappkotlin.database.DatabaseConstants.Companion.DATABASE_NAME
+import com.example.digitalegyptlenovo.movieappkotlin.database.DatabaseConstants.Companion.DATABASE_VERSION
 
 /**
  * Created by Mohamed Elshafey on 4/17/2018.
@@ -37,12 +37,5 @@ class FeedGenreHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
 
     override fun onDowngrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         onUpgrade(db, oldVersion, newVersion)
-    }
-}
-
-class DatabaseConstants {
-    companion object {
-        const val DATABASE_VERSION: Int = 1
-        const val DATABASE_NAME: String = "Genre.db"
     }
 }

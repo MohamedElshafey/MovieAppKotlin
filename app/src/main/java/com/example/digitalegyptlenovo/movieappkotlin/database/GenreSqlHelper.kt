@@ -1,11 +1,11 @@
-package com.example.digitalegyptlenovo.movieappkotlin.sqlite.helper
+package com.example.digitalegyptlenovo.movieappkotlin.database
 
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import com.example.digitalegyptlenovo.movieappkotlin.sqlite.helper.FeedGenreHelper.FeedEntry.COLUMN_ID
-import com.example.digitalegyptlenovo.movieappkotlin.sqlite.helper.FeedGenreHelper.FeedEntry.COLUMN_NAME
-import com.example.digitalegyptlenovo.movieappkotlin.sqlite.helper.FeedGenreHelper.FeedEntry.TABLE_NAME
+import com.example.digitalegyptlenovo.movieappkotlin.database.FeedGenreHelper.FeedEntry.COLUMN_ID
+import com.example.digitalegyptlenovo.movieappkotlin.database.FeedGenreHelper.FeedEntry.COLUMN_NAME
+import com.example.digitalegyptlenovo.movieappkotlin.database.FeedGenreHelper.FeedEntry.TABLE_NAME
 
 /**
  * Created by Mohamed Elshafey on 4/17/2018.

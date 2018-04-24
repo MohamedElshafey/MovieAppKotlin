@@ -3,7 +3,7 @@ package com.example.digitalegyptlenovo.movieappkotlin.viewmodel
 import android.content.Context
 import android.databinding.BaseObservable
 import com.example.digitalegyptlenovo.movieappkotlin.model.Movie
-import com.example.digitalegyptlenovo.movieappkotlin.sqlite.helper.GenreSqlHelper
+import com.example.digitalegyptlenovo.movieappkotlin.database.GenreSqlHelper
 
 /**
  * Created by Mohamed Elshafey on 4/22/2018.
