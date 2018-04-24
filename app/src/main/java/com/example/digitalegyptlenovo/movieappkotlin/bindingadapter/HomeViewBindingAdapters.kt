@@ -14,7 +14,7 @@ class HomeViewBindingAdapters {
     companion object {
         @JvmStatic
         @BindingAdapter("adapter", "data", requireAll = true)
-        fun bind(gridView: GridView, adapter: AllMovieAdapter, data: ArrayList<Movie>) {
+        fun addGridAdapter(gridView: GridView, adapter: AllMovieAdapter, data: ArrayList<Movie>) {
             if (gridView.adapter == null)
                 gridView.adapter = adapter
             adapter.updateData(data)
@@ -22,8 +22,8 @@ class HomeViewBindingAdapters {
 
         @JvmStatic
         @BindingAdapter("loadMore", requireAll = true)
-        fun scroll(gridView: GridView, loadMoreInterface: LoadMore) {
-            var page = 1;
+        fun endlessScroll(gridView: GridView, loadMoreInterface: LoadMore) {
+            var page = 1
             gridView.setOnScrollListener(object : AbsListView.OnScrollListener {
                 override fun onScroll(view: AbsListView?, firstVisibleItem: Int, visibleItemCount: Int, totalItemCount: Int) {
                     try {

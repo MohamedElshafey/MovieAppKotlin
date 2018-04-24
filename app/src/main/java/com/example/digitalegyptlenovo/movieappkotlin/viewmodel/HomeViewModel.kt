@@ -42,10 +42,11 @@ class HomeViewModel(private val activity: Activity, private val retrofit: Retrof
     init {
         val genreSqlHelper = GenreSqlHelper(activity)
 
+        val page = 1
         if (genreSqlHelper.isTableEmpty())
-            getGenresThenGetPopularMovies(1)
+            getGenresThenGetPopularMovies(page)
         else
-            getPopularMovies(1)
+            getPopularMovies(page)
     }
 
     private var compositeDisposable: CompositeDisposable? = null
@@ -56,8 +57,8 @@ class HomeViewModel(private val activity: Activity, private val retrofit: Retrof
         val observable: Observable<Genres> = retrofitService.listGenres(MovieDbAPiConst.apiKey)
 
         val genresDisposable = observable.map {
-            saveGenres(it)
-            getPopularMovies(1)
+            saveGenresToDB(it)
+            getPopularMovies(page)
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()
@@ -78,7 +79,7 @@ class HomeViewModel(private val activity: Activity, private val retrofit: Retrof
         super.notifyPropertyChanged(BR.movies)
     }
 
-    private fun saveGenres(genres: Genres) {
+    private fun saveGenresToDB(genres: Genres) {
         val genreSqlHelper = GenreSqlHelper(activity)
         for (genre in genres.genres) {
             genreSqlHelper.addNewGenre(genre.id, genre.name)

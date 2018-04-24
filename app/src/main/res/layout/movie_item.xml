@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="movieVM"
+            type="com.example.digitalegyptlenovo.movieappkotlin.viewmodel.MovieViewModel" />
 
     </data>
 
@@ -24,6 +27,7 @@
 
             <ImageView
                 android:id="@+id/image"
+                imageUrl="@{movieVM.movie.posterPath}"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:scaleType="centerCrop" />
@@ -46,7 +50,7 @@
                         android:maxLines="1"
                         android:padding="3dp"
                         android:singleLine="true"
-                        android:text="@string/app_name"
+                        android:text="@{movieVM.movie.title}"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -56,6 +60,7 @@
                         android:layout_height="wrap_content"
                         android:padding="3dp"
                         android:singleLine="true"
+                        android:text="@{movieVM.genresCollection}"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
 

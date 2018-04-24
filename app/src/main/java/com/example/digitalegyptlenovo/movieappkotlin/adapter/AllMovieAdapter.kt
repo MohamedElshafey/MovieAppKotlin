@@ -7,11 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import com.bumptech.glide.Glide
 import com.example.digitalegyptlenovo.movieappkotlin.R
 import com.example.digitalegyptlenovo.movieappkotlin.databinding.MovieItemBinding
 import com.example.digitalegyptlenovo.movieappkotlin.model.Movie
-import com.example.digitalegyptlenovo.movieappkotlin.sqlite.helper.GenreSqlHelper
+import com.example.digitalegyptlenovo.movieappkotlin.viewmodel.MovieViewModel
+
 
 /**
  * Created by Mohamed Elshafey on 4/18/2018.
@@ -26,34 +26,13 @@ class AllMovieAdapter(private val context: Context) : BaseAdapter() {
     }
 
     @SuppressLint("ViewHolder")
-    override fun getView(i: Int, view: View?, viewGroup: ViewGroup?): View {
+    override fun getView(i: Int, convertView: View?, viewGroup: ViewGroup?): View {
         val inflater: LayoutInflater = LayoutInflater.from(context)
         val binding: MovieItemBinding = DataBindingUtil.inflate(inflater, R.layout.movie_item, viewGroup, false)
 
         val movie: Movie = movies[i]
 
-        val mainImageUrl = "https://image.tmdb.org/t/p/w500"
-
-        val posterPath = movie.poster_path
-
-        val fullImageUrl = mainImageUrl.plus(posterPath)
-
-        Glide.with(context).load(fullImageUrl).into(binding.image)
-
-        binding.movieName.text = movie.title
-
-        val genreSqlHelper = GenreSqlHelper(context)
-
-        val genreNames = genreSqlHelper.getGenreNamesByIds(movie.genre_ids)
-
-        var genres = ""
-        for (genreName in genreNames) {
-            genres = genres.plus(genreName)
-            if (genreNames.indexOf(genreName) < genreNames.size - 1)
-                genres = genres.plus(" ,")
-        }
-
-        binding.info.text = genres
+        binding.movieVM = MovieViewModel(context, movie)
 
         return binding.root
     }
@@ -66,11 +45,8 @@ class AllMovieAdapter(private val context: Context) : BaseAdapter() {
         return 0
     }
 
-
-
     override fun getCount(): Int {
         return movies.size
     }
-
 
 }
