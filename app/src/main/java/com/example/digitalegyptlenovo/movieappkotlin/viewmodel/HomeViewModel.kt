@@ -7,9 +7,9 @@ import android.view.View
 import com.example.digitalegyptlenovo.movieappkotlin.BR
 import com.example.digitalegyptlenovo.movieappkotlin.adapter.AllMovieAdapter
 import com.example.digitalegyptlenovo.movieappkotlin.bindingadapter.LoadMore
+import com.example.digitalegyptlenovo.movieappkotlin.database.GenreSqlHelper
 import com.example.digitalegyptlenovo.movieappkotlin.model.Genres
 import com.example.digitalegyptlenovo.movieappkotlin.model.Movie
-import com.example.digitalegyptlenovo.movieappkotlin.database.GenreSqlHelper
 import com.example.digitalegyptlenovo.movieappkotlin.webservice.MovieDbAPiConst
 import com.example.digitalegyptlenovo.movieappkotlin.webservice.RetrofitService
 import io.reactivex.Observable
@@ -17,8 +17,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
-
-//import  android.databinding.tool.util.GenerationalClassUtil.ExtensionFilter.BR;
 
 /**
  * Created by Mohamed Elshafey on 4/17/2018.
@@ -30,6 +28,8 @@ class HomeViewModel(private val activity: Activity, private val retrofit: Retrof
             getPopularMovies(page)
         }
     }
+
+    private var compositeDisposable = CompositeDisposable()
 
     @Bindable
     var progressEnable: Int = View.VISIBLE
@@ -49,8 +49,6 @@ class HomeViewModel(private val activity: Activity, private val retrofit: Retrof
             getPopularMovies(page)
     }
 
-    private var compositeDisposable: CompositeDisposable? = null
-
     private fun getGenresThenGetPopularMovies(page: Int) {
         val retrofitService = retrofit.create(RetrofitService::class.java)
 
@@ -63,7 +61,7 @@ class HomeViewModel(private val activity: Activity, private val retrofit: Retrof
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()
 
-        compositeDisposable?.add(genresDisposable)
+        compositeDisposable.add(genresDisposable)
     }
 
     private fun hideProgress() {
@@ -98,12 +96,12 @@ class HomeViewModel(private val activity: Activity, private val retrofit: Retrof
                     hideProgress()
                 })
 
-        compositeDisposable?.add(popularDisposable)
+        compositeDisposable.add(popularDisposable)
     }
 
     fun dispose() {
-        if (!compositeDisposable!!.isDisposed)
-            compositeDisposable!!.dispose()
+        if (!compositeDisposable.isDisposed)
+            compositeDisposable.dispose()
     }
 
 }

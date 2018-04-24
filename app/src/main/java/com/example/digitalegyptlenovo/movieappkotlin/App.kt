@@ -4,6 +4,7 @@ import android.app.Application
 import com.example.digitalegyptlenovo.movieappkotlin.dagger.component.DaggerNetworkComponent
 import com.example.digitalegyptlenovo.movieappkotlin.dagger.component.NetworkComponent
 import com.example.digitalegyptlenovo.movieappkotlin.dagger.module.NetworkModule
+import com.example.digitalegyptlenovo.movieappkotlin.preferences.Pref
 import com.example.digitalegyptlenovo.movieappkotlin.webservice.MovieDbAPiConst
 
 /**
@@ -11,11 +12,11 @@ import com.example.digitalegyptlenovo.movieappkotlin.webservice.MovieDbAPiConst
  */
 class App : Application() {
     var networkComponent: NetworkComponent? = null
-        get() = field
-
 
     override fun onCreate() {
         super.onCreate()
+
+        Pref.init(applicationContext)
 
         networkComponent = DaggerNetworkComponent.builder()
                 .networkModule(NetworkModule(MovieDbAPiConst.baseUrl))

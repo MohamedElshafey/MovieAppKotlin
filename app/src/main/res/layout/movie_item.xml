@@ -71,6 +71,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:button="@drawable/favorite_checkbox"
+                    android:checked="@{movieVM.favorite}"
+                    android:onCheckedChanged="@{()->movieVM.checkChanged()}"
                     android:padding="3dp" />
 
             </LinearLayout>
