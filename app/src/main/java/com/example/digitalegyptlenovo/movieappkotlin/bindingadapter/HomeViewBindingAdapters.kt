@@ -2,8 +2,12 @@ package com.example.digitalegyptlenovo.movieappkotlin.bindingadapter
 
 import android.databinding.BindingAdapter
 import android.widget.AbsListView
+import android.widget.ArrayAdapter
 import android.widget.GridView
+import android.widget.Spinner
+import com.example.digitalegyptlenovo.movieappkotlin.R
 import com.example.digitalegyptlenovo.movieappkotlin.adapter.AllMovieAdapter
+import com.example.digitalegyptlenovo.movieappkotlin.interfaces.LoadMore
 import com.example.digitalegyptlenovo.movieappkotlin.model.Movie
 
 /**
@@ -42,5 +46,12 @@ class HomeViewBindingAdapters {
             })
         }
 
+        @JvmStatic
+        @BindingAdapter("dataResource", requireAll = true)
+        fun spinnerAdapter(spinner: Spinner, bool: Boolean) {
+            val adapter = ArrayAdapter.createFromResource(spinner.context, R.array.main_menu, R.layout.spinner_item)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner.adapter = adapter
+        }
     }
 }

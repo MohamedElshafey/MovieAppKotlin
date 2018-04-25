@@ -7,6 +7,7 @@ import com.example.digitalegyptlenovo.movieappkotlin.App
 import com.example.digitalegyptlenovo.movieappkotlin.R
 import com.example.digitalegyptlenovo.movieappkotlin.databinding.ActivityHomeBinding
 import com.example.digitalegyptlenovo.movieappkotlin.viewmodel.HomeViewModel
+import com.example.digitalegyptlenovo.movieappkotlin.viewmodel.ToolbarViewModel
 import retrofit2.Retrofit
 import javax.inject.Inject
 
@@ -27,6 +28,8 @@ class HomeActivity : AppCompatActivity() {
         homeVieModel = HomeViewModel(this, retrofit)
 
         binding.homeViewModel = homeVieModel
+
+        binding.toolbarVM = ToolbarViewModel(this)
     }
 
     override fun onDestroy() {

@@ -6,7 +6,7 @@ import android.databinding.Bindable
 import android.view.View
 import com.example.digitalegyptlenovo.movieappkotlin.BR
 import com.example.digitalegyptlenovo.movieappkotlin.adapter.AllMovieAdapter
-import com.example.digitalegyptlenovo.movieappkotlin.bindingadapter.LoadMore
+import com.example.digitalegyptlenovo.movieappkotlin.interfaces.LoadMore
 import com.example.digitalegyptlenovo.movieappkotlin.database.GenreSqlHelper
 import com.example.digitalegyptlenovo.movieappkotlin.model.Genres
 import com.example.digitalegyptlenovo.movieappkotlin.model.Movie

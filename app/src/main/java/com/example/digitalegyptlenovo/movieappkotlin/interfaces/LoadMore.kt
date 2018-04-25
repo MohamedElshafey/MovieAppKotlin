@@ -1,4 +1,4 @@
-package com.example.digitalegyptlenovo.movieappkotlin.bindingadapter
+package com.example.digitalegyptlenovo.movieappkotlin.interfaces
 
 /**
  * Created by Mohamed Elshafey on 4/22/2018.

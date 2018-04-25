@@ -7,6 +7,11 @@
         <variable
             name="homeViewModel"
             type="com.example.digitalegyptlenovo.movieappkotlin.viewmodel.HomeViewModel" />
+
+        <variable
+            name="toolbarVM"
+            type="com.example.digitalegyptlenovo.movieappkotlin.viewmodel.ToolbarViewModel" />
+
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -18,7 +23,8 @@
             layout="@layout/tool_bar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:toolbarVM="@{toolbarVM}" />
 
         <ProgressBar
             android:id="@+id/progressBar"

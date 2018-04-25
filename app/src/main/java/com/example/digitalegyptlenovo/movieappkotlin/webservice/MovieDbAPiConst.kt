@@ -9,6 +9,4 @@ class MovieDbAPiConst {
         var baseUrl: String = "https://api.themoviedb.org/3/"
         var apiKey: String = "bac4b9718884f32cb7e4cea980e6092c"
     }
-
-
 }

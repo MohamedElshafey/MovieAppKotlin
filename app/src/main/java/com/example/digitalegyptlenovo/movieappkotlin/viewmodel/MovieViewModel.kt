@@ -11,7 +11,7 @@ import com.example.digitalegyptlenovo.movieappkotlin.preferences.Pref
 /**
  * Created by Mohamed Elshafey on 4/22/2018.
  */
-class MovieViewModel(var context: Context, var movie: Movie) : BaseObservable() {
+class MovieViewModel(private var context: Context, var movie: Movie) : BaseObservable() {
     var genresCollection = ""
 
     @Bindable
