@@ -6,7 +6,8 @@ import android.databinding.Bindable
 import com.example.digitalegyptlenovo.movieappkotlin.BR
 import com.example.digitalegyptlenovo.movieappkotlin.database.GenreSqlHelper
 import com.example.digitalegyptlenovo.movieappkotlin.model.Movie
-import com.example.digitalegyptlenovo.movieappkotlin.preferences.Pref
+import com.example.digitalegyptlenovo.movieappkotlin.room.Database.MovieDatabase
+import com.example.digitalegyptlenovo.movieappkotlin.room.DbWorkerThread
 
 /**
  * Created by Mohamed Elshafey on 4/22/2018.
@@ -15,19 +16,22 @@ class MovieViewModel(private var context: Context, var movie: Movie) : BaseObser
     var genresCollection = ""
 
     @Bindable
-    var favorite = false
+    var favorite = movie.favorite
 
-    private var favMoviesPrefTag = "FavoriteMovies"
+    private var mDbWorkerThread: DbWorkerThread = DbWorkerThread("movieWorkerThread")
+
+    private val appDataBase = MovieDatabase.getInstance(context)
 
     init {
+        mDbWorkerThread.start()
+
         getGenres(movie.genre_ids)
 
-        checkFavorite()
+        checkFavoriteInDb()
     }
 
-    private fun checkFavorite() {
-        val favorites: List<String> = Pref.getInstance().get(favMoviesPrefTag)
-        favorite = movie.id.toString() in favorites
+    private fun checkFavoriteInDb() {
+        favorite = appDataBase!!.movieDAO().getFavorite(movie.id)
         super.notifyPropertyChanged(BR.favorite)
     }
 
@@ -41,25 +45,18 @@ class MovieViewModel(private var context: Context, var movie: Movie) : BaseObser
     }
 
     fun checkChanged() {
-        if (favorite)
-            removeFromFavorites()
-        else
-            addToFavorites()
+        movie.favorite = movie.favorite.not()
 
-        favorite = favorite.not()
+        favorite = movie.favorite
+
         super.notifyPropertyChanged(BR.favorite)
-    }
 
-    private fun addToFavorites() {
-        var favorites: List<String> = Pref.getInstance().get(favMoviesPrefTag)
-        favorites = favorites.plusElement(movie.id.toString())
-        Pref.getInstance().put(favMoviesPrefTag, favorites)
-    }
 
-    private fun removeFromFavorites() {
-        var favorites = Pref.getInstance().get(favMoviesPrefTag)
-        favorites = favorites.minus(movie.id.toString())
-        Pref.getInstance().put(favMoviesPrefTag, favorites)
+        val task = Runnable {
+            appDataBase!!.movieDAO().update(movie)
+        }
+
+        mDbWorkerThread.postTask(task)
     }
 
 }

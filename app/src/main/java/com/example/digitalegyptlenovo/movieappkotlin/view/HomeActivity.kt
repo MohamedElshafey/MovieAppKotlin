@@ -33,7 +33,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        homeVieModel!!.dispose()
+        homeVieModel!!.destroy()
         super.onDestroy()
     }
 }
