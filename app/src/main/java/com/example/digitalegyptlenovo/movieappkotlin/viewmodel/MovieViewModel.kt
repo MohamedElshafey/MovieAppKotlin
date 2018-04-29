@@ -31,7 +31,7 @@ class MovieViewModel(private var context: Context, var movie: Movie) : BaseObser
     }
 
     private fun checkFavoriteInDb() {
-        favorite = appDataBase!!.movieDAO().getFavorite(movie.id)
+        favorite = appDataBase!!.movieDAO().isFavorite(movie.id)
         super.notifyPropertyChanged(BR.favorite)
     }
 

@@ -13,11 +13,11 @@ interface MovieDAO {
     @Query("SELECT * FROM movie")
     fun getAll(): List<Movie>
 
-    @Query("SELECT * FROM movie where id LIKE :movieId")
-    fun getFavoriteMovies(movieId: Int): List<Movie>
+    @Query("SELECT * FROM movie where favorite = 1")
+    fun getFavoriteMovies(): List<Movie>
 
     @Query("SELECT movie.favorite FROM movie where id LIKE :movieId")
-    fun getFavorite(movieId: Int): Boolean
+    fun isFavorite(movieId: Int): Boolean
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(vararg movies: Movie)

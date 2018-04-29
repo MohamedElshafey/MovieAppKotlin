@@ -5,4 +5,5 @@ package com.example.digitalegyptlenovo.movieappkotlin.model
  */
 class Popular constructor(var page: Int, var total_results: Int, var total_pages: Int,
                           var results: ArrayList<Movie>) {
+
 }

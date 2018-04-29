@@ -1,11 +1,13 @@
 package com.example.digitalegyptlenovo.movieappkotlin.bindingadapter
 
 import android.databinding.BindingAdapter
+import android.view.View
 import android.widget.*
 import com.example.digitalegyptlenovo.movieappkotlin.R
 import com.example.digitalegyptlenovo.movieappkotlin.adapter.AllMovieAdapter
 import com.example.digitalegyptlenovo.movieappkotlin.interfaces.LoadMore
 import com.example.digitalegyptlenovo.movieappkotlin.model.Movie
+import com.example.digitalegyptlenovo.movieappkotlin.viewmodel.HomeViewModel
 
 /**
  * Created by Mohamed Elshafey on 4/22/2018.
@@ -44,12 +46,26 @@ class HomeViewBindingAdapters {
         }
 
         @JvmStatic
-        @BindingAdapter("textArrayResId", "itemSelectedListener", requireAll = true)
-        fun spinnerAdapter(spinner: Spinner, textArrayResId: Int, itemSelectedListener: AdapterView.OnItemSelectedListener) {
+        @BindingAdapter("textArrayResId", "homeViewModel", requireAll = true)
+        fun spinnerAdapter(spinner: Spinner, textArrayResId: Int,
+                           homeViewModel: HomeViewModel) {
             val adapter = ArrayAdapter.createFromResource(spinner.context, textArrayResId, R.layout.spinner_item)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
-            spinner.onItemSelectedListener = itemSelectedListener
+            spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    val selectedItem = parent!!.getItemAtPosition(position).toString()
+                    if (selectedItem == "Favorite") {
+                        homeViewModel.selectFavorite()
+                    } else if (selectedItem == "Popular") {
+                        homeViewModel.selectPopular(1)
+                    }
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                }
+            }
         }
     }
 }

@@ -3,10 +3,10 @@
 
     <!--Main menu list-->
     <string-array name="main_menu">
-        <item>Favorite</item>
         <item>Popular</item>
         <item>Top Rated</item>
         <item>Newest</item>
+        <item>Favorite</item>
     </string-array>
 
 </resources>

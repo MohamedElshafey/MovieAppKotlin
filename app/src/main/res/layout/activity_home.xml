@@ -18,13 +18,37 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/tool_bar"
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:toolbarVM="@{toolbarVM}" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/tool_bar"
+                app:homeVM="@{homeViewModel}"
+                app:toolbarVM="@{toolbarVM}" />
+
+
+            <GridView
+                android:id="@+id/gridview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:gravity="center"
+                android:horizontalSpacing="6dp"
+                android:numColumns="@integer/grid_columns"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="6dp"
+                app:adapter="@{homeViewModel.movieAdapter}"
+                app:data="@{homeViewModel.movies}"
+                app:loadMore="@{homeViewModel.loadMoreInterface}" />
+        </LinearLayout>
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -35,34 +59,10 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:visibility="@{homeViewModel.progressEnable}"
-            app:layout_constraintBottom_toBottomOf="@+id/gridview"
-            app:layout_constraintEnd_toEndOf="@+id/gridview"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-        <GridView
-            android:id="@+id/gridview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:horizontalSpacing="6dp"
-            android:numColumns="@integer/grid_columns"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="6dp"
-            app:adapter="@{homeViewModel.movieAdapter}"
-            app:data="@{homeViewModel.movies}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintVertical_bias="0.0"
-            app:loadMore="@{homeViewModel.loadMoreInterface}">
-
-        </GridView>
+            app:layout_constraintTop_toTopOf="@+id/container" />
 
     </android.support.constraint.ConstraintLayout>
 
