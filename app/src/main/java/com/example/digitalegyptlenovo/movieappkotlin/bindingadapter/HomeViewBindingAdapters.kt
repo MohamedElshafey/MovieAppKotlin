@@ -5,6 +5,8 @@ import android.view.View
 import android.widget.*
 import com.example.digitalegyptlenovo.movieappkotlin.R
 import com.example.digitalegyptlenovo.movieappkotlin.adapter.AllMovieAdapter
+import com.example.digitalegyptlenovo.movieappkotlin.datamanager.CategoryManager
+import com.example.digitalegyptlenovo.movieappkotlin.datamanager.CategoryManager.Category.*
 import com.example.digitalegyptlenovo.movieappkotlin.interfaces.LoadMore
 import com.example.digitalegyptlenovo.movieappkotlin.model.Movie
 import com.example.digitalegyptlenovo.movieappkotlin.viewmodel.HomeViewModel
@@ -56,9 +58,17 @@ class HomeViewBindingAdapters {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     val selectedItem = parent!!.getItemAtPosition(position).toString()
                     if (selectedItem == "Favorite") {
+                        CategoryManager.setCategory(FAVORITE)
                         homeViewModel.selectFavorite()
-                    } else if (selectedItem == "Popular") {
-                        homeViewModel.selectPopular(1)
+                    } else {
+                        if (selectedItem == "Popular")
+                            CategoryManager.setCategory(POPULAR)
+                        else if (selectedItem == "Top Rated")
+                            CategoryManager.setCategory(TOP_RATED)
+                        else if (selectedItem == "Newest")
+                            CategoryManager.setCategory(NOW_PLAYING)
+
+                        homeViewModel.selectMoviesOfCategory(1)
                     }
                 }
 

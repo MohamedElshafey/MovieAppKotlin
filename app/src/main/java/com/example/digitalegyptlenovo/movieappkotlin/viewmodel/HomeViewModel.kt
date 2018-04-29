@@ -9,7 +9,7 @@ import com.example.digitalegyptlenovo.movieappkotlin.BR
 import com.example.digitalegyptlenovo.movieappkotlin.adapter.AllMovieAdapter
 import com.example.digitalegyptlenovo.movieappkotlin.database.GenreSqlHelper
 import com.example.digitalegyptlenovo.movieappkotlin.datamanager.GenreManager
-import com.example.digitalegyptlenovo.movieappkotlin.datamanager.PopularManager
+import com.example.digitalegyptlenovo.movieappkotlin.datamanager.MovieManager
 import com.example.digitalegyptlenovo.movieappkotlin.helper.NetworkHelper
 import com.example.digitalegyptlenovo.movieappkotlin.interfaces.FetchDatabase
 import com.example.digitalegyptlenovo.movieappkotlin.interfaces.LoadMore
@@ -27,7 +27,7 @@ class HomeViewModel(private val activity: Activity, retrofit: Retrofit) : BaseOb
     val loadMoreInterface = object : LoadMore {
         override fun load(page: Int) {
             if (canLoadMoreMovies && NetworkHelper.isNetworkAvailable(activity))
-                showOnlinePopular(page)
+                showOnlineMovies(page)
         }
     }
 
@@ -49,7 +49,7 @@ class HomeViewModel(private val activity: Activity, retrofit: Retrofit) : BaseOb
 
     private val genreSqlHelper = GenreSqlHelper(activity)
 
-    private var popularManager = PopularManager(retrofit)
+    private var moviesManager = MovieManager(retrofit)
 
     private var genreManager = GenreManager(retrofit, genreSqlHelper)
 
@@ -76,25 +76,25 @@ class HomeViewModel(private val activity: Activity, retrofit: Retrofit) : BaseOb
         super.notifyPropertyChanged(BR.movies)
     }
 
-    fun selectPopular(page: Int) {
+    fun selectMoviesOfCategory(page: Int) {
         movies.clear()
         canLoadMoreMovies = true
         if (NetworkHelper.isNetworkAvailable(activity)) {
             if (genreSqlHelper.isTableEmpty()) {
                 val observable = genreManager.get()
                 observable.doOnComplete {
-                    showOnlinePopular(page)
+                    showOnlineMovies(page)
                 }
             } else {
-                showOnlinePopular(page)
+                showOnlineMovies(page)
             }
         } else
-            showOfflinePopular()
+            showOfflineMovies()
 
     }
 
-    private fun showOfflinePopular() {
-        popularManager.offline(movieDatabase!!, mDbWorkerThread, object : FetchDatabase {
+    private fun showOfflineMovies() {
+        moviesManager.offline(movieDatabase!!, mDbWorkerThread, object : FetchDatabase {
             override fun found(movies: List<Movie>) {
                 moviesLoaded(movies)
                 hideProgress()
@@ -106,11 +106,11 @@ class HomeViewModel(private val activity: Activity, retrofit: Retrofit) : BaseOb
         })
     }
 
-    private fun showOnlinePopular(page: Int) {
-        val popularObservable = popularManager.online(page)
+    private fun showOnlineMovies(page: Int) {
+        val popularObservable = moviesManager.online(page)
         compositeDisposable.add(popularObservable.subscribe({
             moviesLoaded(it.results)
-            popularManager.insertMovieDataInDb(movieDatabase!!, mDbWorkerThread, it.results)
+            moviesManager.insertMovieDataInDb(movieDatabase!!, mDbWorkerThread, it.results)
             hideProgress()
         }))
     }

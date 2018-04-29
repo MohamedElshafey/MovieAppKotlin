@@ -1,7 +1,7 @@
 package com.example.digitalegyptlenovo.movieappkotlin.webservice
 
 import com.example.digitalegyptlenovo.movieappkotlin.model.Genres
-import com.example.digitalegyptlenovo.movieappkotlin.model.Popular
+import com.example.digitalegyptlenovo.movieappkotlin.model.Movies
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -15,5 +15,11 @@ interface RetrofitService {
     fun listGenres(@Query("api_key") api_key: String): Observable<Genres>
 
     @GET("movie/popular?language=en-US")
-    fun listPopularMovies(@Query("api_key") api_key: String, @Query("page") page: Int): Observable<Popular>
+    fun listPopular(@Query("api_key") api_key: String, @Query("page") page: Int): Observable<Movies>
+
+    @GET("movie/top_rated?language=en-US")
+    fun listTopRated(@Query("api_key") api_key: String, @Query("page") page: Int): Observable<Movies>
+
+    @GET("movie/now_playing?language=en-US")
+    fun listNowPlaying(@Query("api_key") api_key: String, @Query("page") page: Int): Observable<Movies>
 }

@@ -22,7 +22,8 @@ class Movie(@ColumnInfo(name = "vote_count") var vote_count: Int,
             @ColumnInfo(name = "genre_ids") var genre_ids: Array<String>,
             @ColumnInfo(name = "overview") var overview: String,
             @ColumnInfo(name = "release_date") var release_date: String,
-            @ColumnInfo(name = "favorite") var favorite: Boolean) {
+            @ColumnInfo(name = "favorite") var favorite: Boolean,
+            @ColumnInfo(name = "category") var category: String) {
 
     fun getPosterPath(): String {
         return "https://image.tmdb.org/t/p/w500$poster_path"

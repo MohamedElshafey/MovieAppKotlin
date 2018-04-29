@@ -10,8 +10,8 @@ import com.example.digitalegyptlenovo.movieappkotlin.model.Movie
 @Dao
 interface MovieDAO {
 
-    @Query("SELECT * FROM movie")
-    fun getAll(): List<Movie>
+    @Query("SELECT * FROM movie where category LIKE :category")
+    fun getAll(category: String): List<Movie>
 
     @Query("SELECT * FROM movie where favorite = 1")
     fun getFavoriteMovies(): List<Movie>
