@@ -3,7 +3,6 @@
     package="com.example.digitalegyptlenovo.movieappkotlin">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -21,6 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".view.DetailsActivity"
+            android:label="@string/title_activity_detatils"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

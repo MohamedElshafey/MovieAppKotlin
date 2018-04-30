@@ -2,8 +2,10 @@ package com.example.digitalegyptlenovo.movieappkotlin.webservice
 
 import com.example.digitalegyptlenovo.movieappkotlin.model.Genres
 import com.example.digitalegyptlenovo.movieappkotlin.model.Movies
+import com.example.digitalegyptlenovo.movieappkotlin.model.Videos
 import io.reactivex.Observable
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -22,4 +24,7 @@ interface RetrofitService {
 
     @GET("movie/now_playing?language=en-US")
     fun listNowPlaying(@Query("api_key") api_key: String, @Query("page") page: Int): Observable<Movies>
+
+    @GET("movie/{movie_id}/videos?language=en-US")
+    fun movieVideos(@Path("movie_id") movie_id: Int, @Query("api_key") api_key: String): Observable<Videos>
 }

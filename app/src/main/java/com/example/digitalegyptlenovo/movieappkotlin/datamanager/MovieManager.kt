@@ -23,9 +23,6 @@ class MovieManager(private var retrofit: Retrofit) {
         val retrofitService = retrofit.create(RetrofitService::class.java)
 
         return getObservable(retrofitService, CategoryManager.getCategory(), page)
-//        return retrofitService.listPopular(MovieDbAPiConst.apiKey, page)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
     }
 
     private fun getObservable(retrofitService: RetrofitService, category: CategoryManager.Category, page: Int): Observable<Movies> {
@@ -70,6 +67,5 @@ class MovieManager(private var retrofit: Retrofit) {
         }
         mDbWorkerThread.postTask(task)
     }
-
 
 }

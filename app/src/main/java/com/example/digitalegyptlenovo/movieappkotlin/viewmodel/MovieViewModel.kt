@@ -1,13 +1,16 @@
 package com.example.digitalegyptlenovo.movieappkotlin.viewmodel
 
 import android.content.Context
+import android.content.Intent
 import android.databinding.BaseObservable
 import android.databinding.Bindable
+import android.view.View
 import com.example.digitalegyptlenovo.movieappkotlin.BR
 import com.example.digitalegyptlenovo.movieappkotlin.database.GenreSqlHelper
 import com.example.digitalegyptlenovo.movieappkotlin.model.Movie
 import com.example.digitalegyptlenovo.movieappkotlin.room.Database.MovieDatabase
 import com.example.digitalegyptlenovo.movieappkotlin.room.DbWorkerThread
+import com.example.digitalegyptlenovo.movieappkotlin.view.DetailsActivity
 
 /**
  * Created by Mohamed Elshafey on 4/22/2018.
@@ -18,7 +21,7 @@ class MovieViewModel(private var context: Context, var movie: Movie) : BaseObser
     @Bindable
     var favorite = movie.favorite
 
-    private var mDbWorkerThread: DbWorkerThread = DbWorkerThread("movieWorkerThread")
+    private var mDbWorkerThread: DbWorkerThread = DbWorkerThread("movieModelWorkerThread")
 
     private val appDataBase = MovieDatabase.getInstance(context)
 
@@ -51,12 +54,17 @@ class MovieViewModel(private var context: Context, var movie: Movie) : BaseObser
 
         super.notifyPropertyChanged(BR.favorite)
 
-
         val task = Runnable {
             appDataBase!!.movieDAO().update(movie)
         }
 
         mDbWorkerThread.postTask(task)
+    }
+
+    fun onClick(view: View) {
+        val intent = Intent(context, DetailsActivity::class.java)
+        intent.putExtra("movie",movie)
+        context.startActivity(intent)
     }
 
 }
