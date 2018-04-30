@@ -21,7 +21,7 @@ class MovieViewModel(private var context: Context, var movie: Movie) : BaseObser
     @Bindable
     var favorite = movie.favorite
 
-    private var mDbWorkerThread: DbWorkerThread = DbWorkerThread("movieModelWorkerThread")
+    private var mDbWorkerThread: DbWorkerThread = DbWorkerThread("dbWorkerThread")
 
     private val appDataBase = MovieDatabase.getInstance(context)
 
@@ -63,7 +63,7 @@ class MovieViewModel(private var context: Context, var movie: Movie) : BaseObser
 
     fun onClick(view: View) {
         val intent = Intent(context, DetailsActivity::class.java)
-        intent.putExtra("movie",movie)
+        intent.putExtra("movie", movie)
         context.startActivity(intent)
     }
 

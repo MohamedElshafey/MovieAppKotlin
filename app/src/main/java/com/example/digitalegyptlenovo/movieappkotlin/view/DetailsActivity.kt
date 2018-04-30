@@ -14,7 +14,8 @@ import javax.inject.Inject
 class DetailsActivity : AppCompatActivity() {
     @Inject
     lateinit var retrofit: Retrofit
-    var detailsViewModel: DetailsViewModel? = null
+
+    private var detailsViewModel: DetailsViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

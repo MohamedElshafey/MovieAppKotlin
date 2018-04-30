@@ -14,5 +14,6 @@ import javax.inject.Singleton
 @Component(modules = [NetworkModule::class])
 interface NetworkComponent {
     fun inject(activity: HomeActivity)
+
     fun inject(activity: DetailsActivity)
 }

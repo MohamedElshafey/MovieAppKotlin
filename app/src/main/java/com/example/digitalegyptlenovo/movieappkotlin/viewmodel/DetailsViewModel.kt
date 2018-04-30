@@ -23,7 +23,7 @@ class DetailsViewModel(var activity: Activity, retrofit: Retrofit, var movie: Mo
     private var videos: Videos? = null
     private var compositeDisposable = CompositeDisposable()
     private val appDataBase = MovieDatabase.getInstance(activity)
-    private var mDbWorkerThread: DbWorkerThread = DbWorkerThread("detailViewWorkerThread")
+    private var mDbWorkerThread: DbWorkerThread = DbWorkerThread("dbWorkerThread")
 
     @Bindable
     var favorite = movie.favorite
@@ -65,5 +65,6 @@ class DetailsViewModel(var activity: Activity, retrofit: Retrofit, var movie: Mo
 
     fun dispose() {
         compositeDisposable.dispose()
+        mDbWorkerThread.quit()
     }
 }

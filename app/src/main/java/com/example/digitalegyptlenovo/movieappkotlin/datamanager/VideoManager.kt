@@ -16,7 +16,9 @@ class VideoManager(private var retrofit: Retrofit) {
     fun get(videoId: Int): Observable<Videos> {
         val retrofitService = retrofit.create(RetrofitService::class.java)
 
-        return retrofitService.movieVideos(videoId, MovieDbAPiConst.apiKey).subscribeOn(Schedulers.io())
+        return retrofitService
+                .movieVideos(videoId, MovieDbAPiConst.apiKey)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
 }
