@@ -30,7 +30,7 @@ class AllMovieAdapter(private val context: Context) : BaseAdapter() {
         val inflater: LayoutInflater = LayoutInflater.from(context)
         val binding: MovieItemBinding = DataBindingUtil.inflate(inflater, R.layout.movie_item, viewGroup, false)
 
-        val movie: Movie = movies[i]
+        val movie = movies[i]
 
         binding.movieVM = MovieViewModel(context, movie)
 

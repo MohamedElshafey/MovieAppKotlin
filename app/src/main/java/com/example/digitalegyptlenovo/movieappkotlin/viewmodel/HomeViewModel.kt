@@ -4,8 +4,8 @@ import android.app.Activity
 import android.databinding.BaseObservable
 import android.databinding.Bindable
 import android.view.View
-import android.widget.Toast
 import com.example.digitalegyptlenovo.movieappkotlin.BR
+import com.example.digitalegyptlenovo.movieappkotlin.R
 import com.example.digitalegyptlenovo.movieappkotlin.adapter.AllMovieAdapter
 import com.example.digitalegyptlenovo.movieappkotlin.database.GenreSqlHelper
 import com.example.digitalegyptlenovo.movieappkotlin.datamanager.GenreManager
@@ -53,6 +53,12 @@ class HomeViewModel(private val activity: Activity, retrofit: Retrofit) : BaseOb
 
     private var genreManager = GenreManager(retrofit, genreSqlHelper)
 
+    @Bindable
+    var showPlaceHolder = View.GONE;
+
+    @Bindable
+    var placeHolderResource: Int = R.drawable.offline_placeholder
+
     init {
         mDbWorkerThread.start()
 
@@ -64,11 +70,13 @@ class HomeViewModel(private val activity: Activity, retrofit: Retrofit) : BaseOb
         }
     }
 
-    private fun hideProgress() {
-        if (progressEnable == View.VISIBLE) {
-            progressEnable = View.GONE
-            super.notifyPropertyChanged(BR.progressEnable)
+    private fun enableProgressBar(show: Boolean) {
+        progressEnable = if (show) {
+            View.VISIBLE
+        } else {
+            View.GONE
         }
+        super.notifyPropertyChanged(BR.progressEnable)
     }
 
     private fun moviesLoaded(mMovies: List<Movie>) {
@@ -77,8 +85,11 @@ class HomeViewModel(private val activity: Activity, retrofit: Retrofit) : BaseOb
     }
 
     fun selectMoviesOfCategory(page: Int) {
+        enableProgressBar(true)
         movies.clear()
         canLoadMoreMovies = true
+        showPlaceHolder = View.GONE;
+
         if (NetworkHelper.isNetworkAvailable(activity)) {
             if (genreSqlHelper.isTableEmpty()) {
                 val observable = genreManager.get()
@@ -97,13 +108,34 @@ class HomeViewModel(private val activity: Activity, retrofit: Retrofit) : BaseOb
         moviesManager.offline(movieDatabase!!, mDbWorkerThread, object : FetchDatabase {
             override fun found(movies: List<Movie>) {
                 moviesLoaded(movies)
-                hideProgress()
+
+                enablePlaceHolder(false, 0)
+
+                enableProgressBar(false)
             }
 
             override fun empty() {
-                Toast.makeText(activity, "No data in cache ... ", Toast.LENGTH_SHORT).show()
+                movies.clear()
+
+                moviesLoaded(movies)
+
+                enablePlaceHolder(true, R.drawable.empty_placeholder)
+
+                enableProgressBar(false)
             }
         })
+    }
+
+    fun enablePlaceHolder(show: Boolean, imageResource: Int) {
+        placeHolderResource = imageResource
+        super.notifyPropertyChanged(BR.placeHolderResource)
+
+        showPlaceHolder = if (show) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+        super.notifyPropertyChanged(BR.showPlaceHolder)
     }
 
     private fun showOnlineMovies(page: Int) {
@@ -111,17 +143,24 @@ class HomeViewModel(private val activity: Activity, retrofit: Retrofit) : BaseOb
         compositeDisposable.add(popularObservable.subscribe({
             moviesLoaded(it.results)
             moviesManager.insertMovieDataInDb(movieDatabase!!, mDbWorkerThread, it.results)
-            hideProgress()
+            enableProgressBar(false)
+            enablePlaceHolder(false, 0)
         }))
     }
 
     fun selectFavorite() {
         movies.clear()
+
         val list = movieDatabase!!.movieDAO().getFavoriteMovies()
+
+        if (list.isEmpty())
+            enablePlaceHolder(true, R.drawable.favorite_placeholder)
+        else
+            enablePlaceHolder(false, 0)
+
         moviesLoaded(list)
         canLoadMoreMovies = false
-        super.notifyPropertyChanged(BR.movies)
-        hideProgress()
+        enableProgressBar(false)
     }
 
     fun destroy() {

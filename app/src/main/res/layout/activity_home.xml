@@ -18,6 +18,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:visibility="@{homeViewModel.showPlaceHolder}"
+            app:cardCornerRadius="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                app:imageResource="@{homeViewModel.placeHolderResource}" />
+
+        </android.support.v7.widget.CardView>
+
+
         <LinearLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
@@ -63,6 +84,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/container" />
+
 
     </android.support.constraint.ConstraintLayout>
 

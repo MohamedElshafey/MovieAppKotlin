@@ -19,10 +19,10 @@ class HomeViewBindingAdapters {
     companion object {
         @JvmStatic
         @BindingAdapter("adapter", "data", requireAll = true)
-        fun addGridAdapter(gridView: GridView, adapter: AllMovieAdapter, data: ArrayList<Movie>) {
+        fun addGridAdapter(gridView: GridView, adapter: AllMovieAdapter, movies: ArrayList<Movie>) {
             if (gridView.adapter == null)
                 gridView.adapter = adapter
-            adapter.updateData(data)
+            adapter.updateData(movies)
         }
 
         @JvmStatic

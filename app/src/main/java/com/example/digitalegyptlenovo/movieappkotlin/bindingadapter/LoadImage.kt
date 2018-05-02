@@ -15,5 +15,11 @@ class LoadImage {
         fun load(imageView: ImageView, imagePath: String) {
             Glide.with(imageView).load(imagePath).into(imageView)
         }
+
+        @JvmStatic
+        @BindingAdapter("imageResource", requireAll = true)
+        fun loadRes(imageView: ImageView, imageResource: Int) {
+            Glide.with(imageView).load(imageResource).into(imageView)
+        }
     }
 }
