@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import com.example.digitalegyptlenovo.movieappkotlin.BR
 import com.example.digitalegyptlenovo.movieappkotlin.datamanager.VideoManager
+import com.example.digitalegyptlenovo.movieappkotlin.helper.FavoriteBusObserver
 import com.example.digitalegyptlenovo.movieappkotlin.helper.YoutubeHelper
 import com.example.digitalegyptlenovo.movieappkotlin.model.Movie
 import com.example.digitalegyptlenovo.movieappkotlin.room.Database.MovieDatabase
@@ -73,6 +74,8 @@ class DetailsViewModel(var activity: Activity, retrofit: Retrofit, var movie: Mo
         favorite = movie.favorite
 
         super.notifyPropertyChanged(BR.favorite)
+
+        FavoriteBusObserver.observe(movie.id.toString(), favorite)
 
         val task = Runnable {
             appDataBase!!.movieDAO().update(movie)

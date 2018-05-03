@@ -7,6 +7,8 @@ import android.databinding.Bindable
 import android.view.View
 import com.example.digitalegyptlenovo.movieappkotlin.BR
 import com.example.digitalegyptlenovo.movieappkotlin.database.GenreSqlHelper
+import com.example.digitalegyptlenovo.movieappkotlin.helper.FavoriteBusObserver
+import com.example.digitalegyptlenovo.movieappkotlin.interfaces.FavoriteBus
 import com.example.digitalegyptlenovo.movieappkotlin.model.Movie
 import com.example.digitalegyptlenovo.movieappkotlin.room.Database.MovieDatabase
 import com.example.digitalegyptlenovo.movieappkotlin.room.DbWorkerThread
@@ -65,6 +67,13 @@ class MovieViewModel(private var context: Context, var movie: Movie) : BaseObser
         val intent = Intent(context, DetailsActivity::class.java)
         intent.putExtra("movie", movie)
         context.startActivity(intent)
+
+        FavoriteBusObserver.subscribe(movie.id.toString(), object : FavoriteBus {
+            override fun isFavorite(isFav: Boolean) {
+                favorite = isFav
+                notifyPropertyChanged(BR.favorite)
+            }
+        })
     }
 
 }
