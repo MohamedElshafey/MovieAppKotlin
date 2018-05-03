@@ -1,5 +1,6 @@
 package com.example.digitalegyptlenovo.movieappkotlin.view
 
+import android.content.res.Configuration
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -15,25 +16,32 @@ class HomeActivity : AppCompatActivity() {
 
     @Inject
     lateinit var retrofit: Retrofit
-
     private var homeVieModel: HomeViewModel? = null
+    private var toolbarViewModel: ToolbarViewModel? = null
+    private var binding: ActivityHomeBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         (application as App).networkComponent?.inject(this)
 
-        val binding: ActivityHomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_home);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
 
         homeVieModel = HomeViewModel(this, retrofit)
+        binding!!.homeViewModel = homeVieModel
 
-        binding.homeViewModel = homeVieModel
+        toolbarViewModel = ToolbarViewModel(this)
+        binding!!.toolbarVM = toolbarViewModel
 
-        binding.toolbarVM = ToolbarViewModel(this)
     }
 
     override fun onDestroy() {
         homeVieModel!!.destroy()
         super.onDestroy()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration?) {
+        super.onConfigurationChanged(newConfig)
+        binding!!.gridview.numColumns = resources.getInteger(R.integer.grid_columns)
     }
 }

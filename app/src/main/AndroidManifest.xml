@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.HomeActivity">
+        <activity
+            android:name=".view.HomeActivity"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,8 +24,9 @@
         </activity>
         <activity
             android:name=".view.DetailsActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_detatils"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

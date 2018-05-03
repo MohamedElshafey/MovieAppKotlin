@@ -66,6 +66,7 @@
             android:button="@drawable/fav_checkbox"
             android:onClick="@{()-> detailsVM.openVideo()}"
             android:src="@drawable/ic_play_circle_filled_white_24dp"
+            android:visibility="@{detailsVM.showPlayButton}"
             app:backgroundTint="@color/colorPrimary"
             app:layout_anchor="@id/app_bar"
             app:layout_anchorGravity="bottom|end" />

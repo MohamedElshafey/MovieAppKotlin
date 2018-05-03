@@ -3,11 +3,12 @@ package com.example.digitalegyptlenovo.movieappkotlin.viewmodel
 import android.app.Activity
 import android.databinding.BaseObservable
 import android.databinding.Bindable
+import android.util.Log
+import android.view.View
 import com.example.digitalegyptlenovo.movieappkotlin.BR
 import com.example.digitalegyptlenovo.movieappkotlin.datamanager.VideoManager
 import com.example.digitalegyptlenovo.movieappkotlin.helper.YoutubeHelper
 import com.example.digitalegyptlenovo.movieappkotlin.model.Movie
-import com.example.digitalegyptlenovo.movieappkotlin.model.Videos
 import com.example.digitalegyptlenovo.movieappkotlin.room.Database.MovieDatabase
 import com.example.digitalegyptlenovo.movieappkotlin.room.DbWorkerThread
 import io.reactivex.disposables.CompositeDisposable
@@ -20,10 +21,14 @@ import retrofit2.Retrofit
 class DetailsViewModel(var activity: Activity, retrofit: Retrofit, var movie: Movie) : BaseObservable() {
 
     private var videoManager = VideoManager(retrofit)
-    private var videos: Videos? = null
+    //    private var videos: Videos? = null
+    private var key: String? = null
     private var compositeDisposable = CompositeDisposable()
     private val appDataBase = MovieDatabase.getInstance(activity)
     private var mDbWorkerThread: DbWorkerThread = DbWorkerThread("dbWorkerThread")
+
+    @Bindable
+    var showPlayButton = View.GONE;
 
     @Bindable
     var favorite = movie.favorite
@@ -33,11 +38,28 @@ class DetailsViewModel(var activity: Activity, retrofit: Retrofit, var movie: Mo
 
         val videoObservable = videoManager.get(movie.id)
 
-        compositeDisposable.add(videoObservable.subscribe {
-            videos = it
-        })
+        compositeDisposable.add(videoObservable.subscribe({
+            if (!it.results.isEmpty()) {
+                key = it!!.results[0].key
+                enablePlayButton(true)
+            } else {
+                enablePlayButton(false)
+            }
+        }, {
+            enablePlayButton(false)
+            Log.d("Error", it.message)
+        }))
 
         checkFavoriteInDb()
+    }
+
+    private fun enablePlayButton(enable: Boolean) {
+        showPlayButton = if (enable) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+        super.notifyPropertyChanged(BR.showPlayButton)
     }
 
     private fun checkFavoriteInDb() {
@@ -60,7 +82,7 @@ class DetailsViewModel(var activity: Activity, retrofit: Retrofit, var movie: Mo
     }
 
     fun openVideo() {
-        YoutubeHelper.watchYoutubeVideo(activity, videos!!.results[0].key)
+        YoutubeHelper.watchYoutubeVideo(activity, key!!)
     }
 
     fun dispose() {

@@ -31,6 +31,7 @@ open class GenreSqlHelper(context: Context) {
         val matchedGenresNames = ArrayList<String>()
         while (cursor.moveToNext()) {
             val genreName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME))
+//            if (!matchedGenresNames.contains(genreName))
             matchedGenresNames.add(genreName)
         }
         cursor.close()

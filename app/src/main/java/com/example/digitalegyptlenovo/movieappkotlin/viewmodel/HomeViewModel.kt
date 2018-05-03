@@ -18,11 +18,12 @@ import com.example.digitalegyptlenovo.movieappkotlin.room.Database.MovieDatabase
 import com.example.digitalegyptlenovo.movieappkotlin.room.DbWorkerThread
 import io.reactivex.disposables.CompositeDisposable
 import retrofit2.Retrofit
+import java.io.Serializable
 
 /**
  * Created by Mohamed Elshafey on 4/17/2018.
  */
-class HomeViewModel(private val activity: Activity, retrofit: Retrofit) : BaseObservable() {
+class HomeViewModel(private val activity: Activity, retrofit: Retrofit) : BaseObservable(), Serializable {
 
     val loadMoreInterface = object : LoadMore {
         override fun load(page: Int) {
@@ -64,10 +65,6 @@ class HomeViewModel(private val activity: Activity, retrofit: Retrofit) : BaseOb
 
         movieDatabase = MovieDatabase.getInstance(activity)
 
-        if (NetworkHelper.isNetworkAvailable(activity)) {
-            if (genreSqlHelper.isTableEmpty())
-                genreManager.get()
-        }
     }
 
     private fun enableProgressBar(show: Boolean) {

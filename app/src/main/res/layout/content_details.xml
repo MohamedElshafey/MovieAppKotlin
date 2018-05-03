@@ -42,6 +42,15 @@
                     android:layout_margin="@dimen/text_margin"
                     android:text="@{`Released: ` + detailsVM.movie.release_date}" />
 
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    android:contentDescription="@string/poster"
+                    android:scaleType="centerInside"
+                    app:imageUrl="@{detailsVM.movie.posterPath}" />
+
             </LinearLayout>
 
             <LinearLayout
