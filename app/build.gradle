@@ -74,12 +74,11 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
 
     //Room
-//    implementation "android.arch.persistence.room:runtime:$archRoomVersion";
-//    annotationProcessor "android.arch.persistence.room:compiler:$archRoomVersion"
-//    kapt "android.arch.persistence.room:compiler:$archRoomVersion"
-
-
     implementation "android.arch.persistence.room:runtime:1.0.0"
     kapt "android.arch.persistence.room:compiler:1.0.0"
+
+    //leak canary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 
 }
