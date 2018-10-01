@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 
 @Module
-class NetworkModule(val baseUrl: String) {
+class NetworkModule(private val baseUrl: String) {
 
 //    private val mBaseUrl: String = ""
 
